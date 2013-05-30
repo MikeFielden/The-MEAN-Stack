@@ -1,6 +1,22 @@
 *.sw*
 *~
+
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
 node_modules/
-vendor/angular/
-vendor/sass-bootstrap/
 .sass-cache/
+styles/*
+public/index.html
