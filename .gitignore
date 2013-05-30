@@ -1,0 +1,6 @@
+*.sw*
+*~
+node_modules/
+vendor/angular/
+vendor/sass-bootstrap/
+.sass-cache/

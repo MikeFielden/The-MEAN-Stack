@@ -1,0 +1,26 @@
+{
+  "author": "Mike Fielden",
+  "name": "The-MEAN-Stack boilerplate",
+  "version": "0.0.1",
+  "homepage": "https://github.com/MikeFielden/The-MEAN-Stack",
+  
+  "bugs": "https://github.com/MikeFielden/The-MEAN-Stack/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MikeFielden/The-MEAN-Stack.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-compass": "0.2.0",
+
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "~0.5.2",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-karma": "~0.4.4",
+    "grunt-ngmin": "0.0.2"
+  }
+}
