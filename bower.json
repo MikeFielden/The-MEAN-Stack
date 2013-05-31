@@ -1,5 +1,9 @@
 {
   "name": "The-MEAN-Stack-boilerplate",
   "version": "0.0.1",
+  "dependencies": {
+
+  },
+
   "devDependencies": {}
 }

@@ -61,8 +61,8 @@ module.exports = function (grunt) {
 			atpl: [ 'public/app/**/*.tpl.html' ],
 			ctpl: [ 'public/components/**/*.tpl.html' ],
 			tpljs: [ 'public/min/tmp/*.js' ],
-			html: [ 'public/index.html' ],
-			sass: 'public/sass/main.scss',
+			itpl: [ 'public/index.tpl.html' ],
+			sass: ['public/sass/**/*.scss'],
 			unit: [ 'public/**/*.spec.js' ]
 		},
 
@@ -106,13 +106,14 @@ module.exports = function (grunt) {
 		 *	The 'dist' obj min's the scss files
 		 *	The 'dev' obj just does a regular compass compile
 		 */
-		compass: {
+		compass2: {
 			dist: {
 				options: {
 					sassDir: 'public/sass',
 					cssDir: 'public/styles/',
 					environment: 'production',
-					raw: "preferred_syntax = :scss\n"
+					raw: "preferred_syntax = :scss\n",
+					//specify: 'public/sass/main.scss'
 				}
 			},
 
@@ -123,6 +124,26 @@ module.exports = function (grunt) {
 					cssDir: 'public/styles/',
 					environment: 'development',
 					raw: "preferred_syntax = :scss\n"
+				}
+			},
+
+			clean: {
+				options: {
+					clean: true
+				}
+			}
+		},
+
+		compass: {
+			dist: {
+				options: {
+					basePath: 'public',
+					sassDir: 'sass',
+					cssDir: 'stylesheets/',
+					environment: '<%= env.environment %>',
+					environment: 'production',
+					raw: "preferred_syntax = :scss\n",
+					specify: 'public/sass/main.scss'
 				}
 			}
 		},
@@ -136,8 +157,7 @@ module.exports = function (grunt) {
 				'Gruntfile.js', 
 				'<%= src.js %>',
 				'<%= src.unit %>',
-				'!public/components/**',
-				'!public/libs/**'
+				'!public/components/**'
 			],
 			test: [
 				'<%= src.unit %>'
@@ -233,23 +253,41 @@ module.exports = function (grunt) {
 				files: [ 
 					'<%= src.js %>'
 				],
-				tasks: [ 'jshint:src', 'concat:dist', 'ngmin:dist', 'uglify:dist' ]
+				tasks: [ 'jshint:src', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify' ]
 			},
 
 			/**
 			 * When the CSS files change, we need to compile and minify just them.
 			 */
 			sass: {
-				files: [ 'src/**/*.scss' ],
+				files: [ 'public/sass/**/*.scss' ],
 				tasks: 'compassCompile'
 			},
+
+			index: {
+				files: [ '<%= src.itpl %>' ],
+				tasks: [ 'index' ]
+			},
+
+			/**
+       * When our templates change, we only add them to the template cache.
+       */
+      tpls: {
+        files: [ 
+          '<%= src.atpl %>', 
+          '<%= src.ctpl %>'
+        ],
+        tasks: [ 'html2js', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify' ]
+      },
 
 			envs: {
 				files: [
 					'environment.json'
 				],
 
-				tasks: ['build']
+				// TODO: RUN THE COMPASS CMD HERE
+				tasks: ['clean']
+
 			}
 		}
 	});
@@ -266,7 +304,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('watch', ['default', 'delta']);
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index']);
+	//grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index']);
+
+	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'index']);
 
 	/**
 	 *  Task for general compass items 
@@ -288,7 +328,7 @@ module.exports = function (grunt) {
 	 */
 	grunt.registerTask( 'index', 'Process index.html template', function () {
 		grunt.log.writeln("Converting index.html...");
-		
+
 		grunt.file.copy('public/index.tpl.html', 'public/index.html', { 
 			process: grunt.template.process 
 		});
