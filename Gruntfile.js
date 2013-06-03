@@ -81,6 +81,20 @@ module.exports = function (grunt) {
 			}
 		},
 
+		/**
+		 *	This task will copy the main.css file to the same folder
+		 *	but will include a version number from the package.json file
+		 */
+		copy: {
+			css: {
+				files: [{ 
+          src: [ 'public/stylesheets/main.css' ],
+          dest: 'public/stylesheets/main.v<%= pkg.version %>.css',
+          expand: false
+        }]
+			}
+		},
+
 		concat: {
 			app: {
 				src: [
@@ -106,42 +120,25 @@ module.exports = function (grunt) {
 		 *	The 'dist' obj min's the scss files
 		 *	The 'dev' obj just does a regular compass compile
 		 */
-		compass2: {
+		compass: {
 			dist: {
 				options: {
-					sassDir: 'public/sass',
-					cssDir: 'public/styles/',
+					basePath: 'public/',
+					sassDir: 'sass',
+					cssDir: 'stylesheets/',
 					environment: 'production',
 					raw: "preferred_syntax = :scss\n",
-					//specify: 'public/sass/main.scss'
+					specify: 'public/sass/main.scss'
 				}
 			},
 
 			dev: {
 				options: {
-					outputStyle: 'compact',
-					sassDir: 'public/sass',
-					cssDir: 'public/styles/',
-					environment: 'development',
-					raw: "preferred_syntax = :scss\n"
-				}
-			},
-
-			clean: {
-				options: {
-					clean: true
-				}
-			}
-		},
-
-		compass: {
-			dist: {
-				options: {
-					basePath: 'public',
+					basePath: 'public/',
+					outputStyle: 'expanded',
 					sassDir: 'sass',
 					cssDir: 'stylesheets/',
-					environment: '<%= env.environment %>',
-					environment: 'production',
+					environment: 'development',
 					raw: "preferred_syntax = :scss\n",
 					specify: 'public/sass/main.scss'
 				}
@@ -304,24 +301,30 @@ module.exports = function (grunt) {
 	grunt.registerTask('watch', ['default', 'delta']);
 
 	grunt.registerTask('default', ['build']);
-	//grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index']);
-
-	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'index']);
+	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index']);
 
 	/**
 	 *  Task for general compass items 
 	 *  This task will determine which environment you have set and run that task
 	 */
 	grunt.registerTask('compassCompile', 'Compiling the sass files', function () {
-		grunt.log.writeln("Current environment: " + grunt.config.get("env").environment);
+		var env = grunt.config.get("env");
 
-		if (grunt.config.get("env").environment === "production") {
+		grunt.log.writeln("Current environment: " + env.environment);
+
+		if (env.environment === "production") {
 			grunt.task.run('compass:dist');
 		} else {
 			grunt.task.run('compass:dev');
 		}
-	});
 
+		// If youd like the file with v0.0.1.css for cacheBusting
+		if (env.cssCacheBusting) {
+			grunt.task.run('copy:css');	
+		}
+
+	});
+	
 	/** 
 	 * The index.html template includes the stylesheet and javascript sources
 	 * based on dynamic names calculated in this Gruntfile. This task compiles it.
@@ -329,8 +332,6 @@ module.exports = function (grunt) {
 	grunt.registerTask( 'index', 'Process index.html template', function () {
 		grunt.log.writeln("Converting index.html...");
 
-		grunt.file.copy('public/index.tpl.html', 'public/index.html', { 
-			process: grunt.template.process 
-		});
+		grunt.file.copy('public/index.tpl.html', 'public/index.html', { process: grunt.template.process });
 	});
 };

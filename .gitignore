@@ -18,5 +18,5 @@ Thumbs.db
 
 node_modules/
 .sass-cache/
-styles/*
-public/index.html
+public/stylesheets/*.css
+public/min/*.js

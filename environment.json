@@ -1,3 +1,4 @@
 {
-	"environment": "production"
+	"environment": "production",
+	"cssCacheBusting": true
 }
