@@ -56,7 +56,7 @@ module.exports = function (grunt) {
 		 *		'sass' is out main sass file (the one that includes all other scss files)
 		 */
 		src: {
-			js: [ 'public/**/*.js', '!public/**/*.spec.js', '!public/libs/**', '!public/min/' ],
+			js: [ 'public/**/*.js', '!public/**/*.spec.js', '!public/libs/**', '!public/min/**' ],
 			libs: ['public/libs/*.js'],
 			atpl: [ 'public/app/**/*.tpl.html' ],
 			ctpl: [ 'public/components/**/*.tpl.html' ],
@@ -278,13 +278,9 @@ module.exports = function (grunt) {
       },
 
 			envs: {
-				files: [
-					'environment.json'
-				],
+				files: 'environment.json',
 
-				// TODO: RUN THE COMPASS CMD HERE
-				tasks: ['clean']
-
+				tasks: ['clean', 'compassCompile', 'index']
 			}
 		}
 	});
@@ -324,7 +320,7 @@ module.exports = function (grunt) {
 		}
 
 	});
-	
+
 	/** 
 	 * The index.html template includes the stylesheet and javascript sources
 	 * based on dynamic names calculated in this Gruntfile. This task compiles it.
