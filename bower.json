@@ -1,9 +1,11 @@
 {
-  "name": "The-MEAN-Stack-boilerplate",
+  "name": "The-MEAN-Stack-Boilerplate",
   "version": "0.0.1",
   "dependencies": {
-
+  	"angular": "latest"
   },
 
-  "devDependencies": {}
+  "devDependencies": {
+  	
+  }
 }

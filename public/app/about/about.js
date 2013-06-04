@@ -8,7 +8,6 @@ angular.module( 'ngMeanStack.about', [])
 })
 
 .controller( 'AboutCtrl', function AboutCtrl( $scope ) {
-  
   // This is simple a demo for UI Boostrap.
   $scope.dropdownDemoItems = [
     "The first choice!",

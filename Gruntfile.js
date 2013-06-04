@@ -56,11 +56,10 @@ module.exports = function (grunt) {
 		 *		'sass' is out main sass file (the one that includes all other scss files)
 		 */
 		src: {
-			js: [ 'public/**/*.js', '!public/**/*.spec.js', '!public/libs/**', '!public/min/**' ],
-			libs: ['public/libs/*.js'],
+			js: [ 'public/**/*.js', '!public/**/*.spec.js', '!public/min/**' ],
 			atpl: [ 'public/app/**/*.tpl.html' ],
 			ctpl: [ 'public/components/**/*.tpl.html' ],
-			tpljs: [ 'public/min/tmp/*.js' ],
+			tpljs: [ 'public/min/tmp/**/*.js' ],
 			itpl: [ 'public/index.tpl.html' ],
 			sass: ['public/sass/**/*.scss'],
 			unit: [ 'public/**/*.spec.js' ]
@@ -88,10 +87,10 @@ module.exports = function (grunt) {
 		copy: {
 			css: {
 				files: [{ 
-          src: [ 'public/stylesheets/main.css' ],
-          dest: 'public/stylesheets/main.v<%= pkg.version %>.css',
-          expand: false
-        }]
+					src: [ 'public/stylesheets/main.css' ],
+					dest: 'public/stylesheets/main.v<%= pkg.version %>.css',
+					expand: false
+				}]
 			}
 		},
 
@@ -108,7 +107,7 @@ module.exports = function (grunt) {
 
 			libs: {
 				src: [
-					'<%= src.libs %>',
+					'<%= env.libaryFiles %>',
 					'<%= mindir %>/<%= pkg.name %>.annotated.js'	
 				],
 				dest: '<%= mindir %>/<%= pkg.name %>.concat.full.js'
@@ -226,7 +225,7 @@ module.exports = function (grunt) {
 			 * unaffected. It runs by default on port 35729.
 			 */
 			options: {
-				livereload: true
+				livereload: false
 			},
 
 			/**
@@ -267,15 +266,21 @@ module.exports = function (grunt) {
 			},
 
 			/**
-       * When our templates change, we only add them to the template cache.
-       */
-      tpls: {
-        files: [ 
-          '<%= src.atpl %>', 
-          '<%= src.ctpl %>'
-        ],
-        tasks: [ 'html2js', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify' ]
-      },
+			 * When our templates change, we only add them to the template cache.
+			 */
+			tpls: {
+				files: [ 
+					'<%= src.atpl %>', 
+					'<%= src.ctpl %>'
+				],
+				tasks: [ 'html2js', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify' ]
+			},
+
+			vendor: {
+				files: 'vendor/**',
+
+				tasks: [ 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify' ]
+			},
 
 			envs: {
 				files: 'environment.json',

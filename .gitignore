@@ -21,3 +21,4 @@ node_modules/
 public/stylesheets/*.css
 public/min/
 public/index.html
+vendor/*

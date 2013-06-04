@@ -1,4 +1,7 @@
 {
-	"environment": "production",
-	"cssCacheBusting": true
+	"environment": "dev",
+	"cssCacheBusting": true,
+	"libaryFiles": [
+		"vendor/angular/angular.min.js"
+	]
 }

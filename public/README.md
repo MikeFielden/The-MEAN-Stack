@@ -12,8 +12,7 @@ public/
   |  |- app.spec.js
   |- assets/
   |  |- fonts/
-  |- components/ 
-  |- libs/
+  |- components/
   |- min/ 
   |- sass/
   |  |- main.scss
@@ -29,13 +28,11 @@ public/
   
 - `public/components/` - third-party components likely to be reused in another application. [Read more &raquo;](components/README.md)
   
-- `public/libs/` - third-party library files (like angularJS)
-
 - `public/min/` - Output of the concatenation/ngmin/uglification process
 
 - `public/sass/` - SCSS CSS files. [Read more &raquo;](sass/README.md)
 
-- `public/styles/` - Output of the Sass compilation process
+- `public/stylesheets/` - Output of the Sass compilation process
 
 - `public/index.html` - this is the HTML document of the single-page application.
   See below.
