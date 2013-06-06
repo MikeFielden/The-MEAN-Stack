@@ -14,6 +14,11 @@ angular.module( 'ngMeanStack.about', [])
     "And another choice for you.",
     "but wait! A third!"
   ];
+
+  $scope.testExample = function () {
+    return true; 
+  };
+
 })
 
 ;

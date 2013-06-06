@@ -11,8 +11,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-
-	//grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-ngmin');
 
 	/**
@@ -107,7 +106,7 @@ module.exports = function (grunt) {
 
 			libs: {
 				src: [
-					'<%= env.libaryFiles %>',
+					'<%= env.libFiles %>',
 					'<%= mindir %>/<%= pkg.name %>.annotated.js'	
 				],
 				dest: '<%= mindir %>/<%= pkg.name %>.concat.full.js'
@@ -216,6 +215,18 @@ module.exports = function (grunt) {
 		},
 
 		/**
+		* Jasmine unit testing
+		*/
+		jasmine: {
+			src: '<%= src.js %>',
+			options: {	
+				specs: '<%= src.unit %>',
+				vendor: ['<%= env.libFiles %>', '<%= env.testingLibs %>'],
+				helpers: '<%= src.tpljs %>'
+			}
+		},
+
+		/**
 		 *	
 		 */
 		delta: {
@@ -242,14 +253,15 @@ module.exports = function (grunt) {
 			},
 
 			/**
-			 * When our source files change, we want to run most of our build tasks
+			 * When our source files or unit tests change, we want to run most of our build tasks
 			 * (excepting uglification).
 			 */
 			src: {
 				files: [ 
-					'<%= src.js %>'
+					'<%= src.js %>',
+					'<%= src.unit %>'
 				],
-				tasks: [ 'jshint:src', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify' ]
+				tasks: [ 'jshint:src', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'jasmine' ]
 			},
 
 			/**
@@ -284,7 +296,6 @@ module.exports = function (grunt) {
 
 			envs: {
 				files: 'environment.json',
-
 				tasks: ['clean', 'compassCompile', 'index']
 			}
 		}
@@ -298,11 +309,12 @@ module.exports = function (grunt) {
 	 *	This allows us to watch what we want to watch and control what happens
 	 */
 	grunt.renameTask('watch', 'delta');
-	//grunt.registerTask('watch', ['default', 'karma:unit', 'delta']);
-	grunt.registerTask('watch', ['default', 'delta']);
+	grunt.registerTask('watch', ['default', 'jasmine', 'delta']);
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index']);
+	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index', 'jasmine']);
+
+	grunt.registerTask('test', ['jasmine']);
 
 	/**
 	 *  Task for general compass items 

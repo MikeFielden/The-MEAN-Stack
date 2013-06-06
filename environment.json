@@ -1,7 +1,11 @@
 {
 	"environment": "dev",
 	"cssCacheBusting": true,
-	"libaryFiles": [
+	"libFiles": [
 		"vendor/angular/angular.min.js"
+	],
+
+	"testingLibs": [
+		"vendor/angular-mocks/angular-mocks.js"
 	]
 }
