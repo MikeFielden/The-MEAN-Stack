@@ -9,7 +9,17 @@
     "type": "git",
     "url": "git@github.com:MikeFielden/The-MEAN-Stack.git"
   },
-  "dependencies": {},
+
+  "scripts": {
+    "start": "node server"
+  },
+
+  "dependencies": {
+    "express" : "3.2.6",
+    "ejs": "latest",
+    "mongoose" : "3.6.11",
+    "node-logging": "0.1.6"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-compass": "0.2.0",
