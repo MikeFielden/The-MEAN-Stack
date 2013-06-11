@@ -33,6 +33,7 @@ function bootApplication(app) {
 
 	// Middleware
 	app.use(express.bodyParser());
+	app.use(express.compress());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser());
 
@@ -60,8 +61,6 @@ function bootApplication(app) {
 	{
 		res.render('index.html');
 	});
-
-
 
 }
 
