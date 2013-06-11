@@ -1,16 +1,21 @@
 var app,
 	app_root	= __dirname,
-	app_port	= 1337,
-	// fs			= require('fs'),
+	app_port	= process.env.PORT || 1337,
+	env	= require('./environment.json').environment,
+	dbConfig = require('./db/config.js')[env],
+	fs			= require('fs'),
 	express		= require('express'),
 	util		= require('util'),
-	// mongoose	= require('mongoose'),
+	mongoose	= require('mongoose'),
 	logging		= require('node-logging');
 	// nib			= require('nib'),
 	// passport	= require('passport');
 
-// mongoose.connect('mongodb://localhost/boilerplate');
-// mongoose.connection.on('error', console.error);
+// Connect to the Mongo db
+mongoose.connect(dbConfig.db);
+mongoose.connection.once('open', function () {
+	console.log('Connected successfully....');
+});
 
 // Initial bootstrapping
 exports.boot = function(params){
@@ -21,7 +26,7 @@ exports.boot = function(params){
 	// Bootstrap application
 	bootApplication(app);
 	
-	//bootModels(app);
+	bootModels(app);
 	//bootControllers(app);
 	
 	return app;
@@ -62,19 +67,21 @@ function bootApplication(app) {
 		res.render('index.html');
 	});
 
+	
 }
 
 //Bootstrap models 
 function bootModels(app) {
-	fs.readdir(app_root + '/db/models', function(err, files){
-		if (err) throw err;
-		files.forEach(function(file){
+	fs.readdir(app_root + '/db/models', function (err, files) {
+		if (err) {
+			throw err;
+		}
+
+		files.forEach(function (file) {
 			bootModel(app, file);
 		});
 	});
 	
-	// Connect to mongoose
-	mongoose.connect(app.set('db-uri'));
 }
 
 // Bootstrap controllers
@@ -86,12 +93,12 @@ function bootControllers(app) {
 		});
 	});
 	
-	require(app_root + '/controllers/AppController')(app);			// Include
+	require(app_root + '/db/controllers/AppController')(app);			// Include
 }
 
 function bootModel(app, file) {
 	var name = file.replace('.js', ''),
-		schema = require(app_root + '/models/'+ name);				// Include the mongoose file
+		schema = require(app_root + '/db/models/'+ name);				// Include the mongoose file
 }
 
 // Load the controller, link to its view file from here
