@@ -18,7 +18,8 @@
     "express" : "3.2.6",
     "ejs": "latest",
     "mongoose" : "3.6.11",
-    "node-logging": "0.1.6"
+    "node-logging": "0.1.6",
+    "path": "0.4.9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

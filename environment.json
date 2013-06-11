@@ -1,5 +1,5 @@
 {
-	"environment": "dev",
+	"environment": "development",
 	"cssCacheBusting": true,
 	"libFiles": [
 		"vendor/angular/angular.min.js"
