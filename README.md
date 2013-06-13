@@ -55,8 +55,6 @@ Notice that you are automatically directed to the url [http://localhost:1337/#/a
 
 `The MEAN Stack` is designed to get you up and running with a modern web application very quickly. 
 
-### Basic Structure
-
 ### The Build System
 
 The best way to learn about the build system is by familiarizing yourself with
@@ -79,4 +77,16 @@ changes using `grunt-contrib-watch`. What follows is a list of the tasks you can
 * `grunt test` - Executes the jasmine tests
 * `grunt compassCompile` - Uses the `environment.json` file to determine whether or not to minify the css output and whether or not to attach a version number to the outputted file.
 * `grunt index` - Compiles the index file. We do this because I want to tie into some variables located in the `package.json` file.
+
+## FAQ
+1. What is this `environment.json` file used for?
+This file is used to control certain aspects of the build process. 
+
+* `environment` - Tells the SASS compilation whether or not to minify and compress the output. 
+	- `development` -> Expanded output
+	- `production` -> Compressed/Minified output
+* `cssCacheBusting` - Tells the grunt task whether or not to make a copy of the file using the version number in the `package.json` file
+* `libFiles` - Files you want included in the concatentation build process.
+	- It's worth noting here that order does matter in this array
+* `testingLibs` - Files required for testing but do not need to be part of your file outputted css
 
