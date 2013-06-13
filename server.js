@@ -26,8 +26,8 @@ exports.boot = function(params){
 	// Bootstrap application
 	bootApplication(app);
 	
-	bootModels(app);
-	bootControllers(app);
+	bootModels();
+	bootControllers();
 	
 	return app;
 };
@@ -64,51 +64,49 @@ function bootApplication(app) {
 }
 
 //Bootstrap models 
-function bootModels(app) {
+function bootModels() {
 	fs.readdir(app_root + '/db/models', function (err, files) {
 		if (err) {
 			throw err;
 		}
 
 		files.forEach(function (file) {
-			bootModel(app, file);
+			bootModel(file);
 		});
 	});
 	
 }
 
 // Bootstrap controllers
-function bootControllers(app) {
+function bootControllers() {
 	fs.readdir(app_root + '/db/controllers', function(err, files){
 		if (err) {
 			throw err;
 		}
 
 		files.forEach(function(file){			
-			bootController(app, file);				
+			bootController(file);				
 		});
 	});
 	
-	require(app_root + '/db/controllers/AppController')(app);			// Include
+	// Include the main Controller
+	require(app_root + '/db/controllers/AppController')(app);
 }
 
-function bootModel(app, file) {
-	var name = file.replace('.js', ''),
-		schema = require(app_root + '/db/models/'+ name);				// Include the mongoose file
+function bootModel(file) {
+	var name = file.replace('.js', '');
+
+	// Include the mongoose file
+	require(app_root + '/db/models/'+ name);
 }
 
 // Load the controller, link to its view file from here
-function bootController(app, file) {
+function bootController(file) {
 	var name = file.replace('.js', ''),
-			controller = app_root + '/db/controllers/' + name; // full controller to include
-	 		//template = name.replace('Controller','').toLowerCase();	// template folder for html - remove the ...Controller part.
+			controller = app_root + '/db/controllers/' + name;
 
-	// console.log('bootController')
-	// console.log('name = '+name)
-	// console.log('controller = '+controller)
-	
 	// Include the controller
-	//require(controller)(app);			// Include
+	require(controller);
 }
 
 // allow normal node loading if appropriate
