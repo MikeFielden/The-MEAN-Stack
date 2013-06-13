@@ -86,7 +86,7 @@ As it stands now; the output of the javascript build process is a minified versi
 The format for the file names are:
 - `NAMEOFAPP.annotated.js` - The output of the `ngmin` task that makes ready angularJS files
 - `NAMEOFAPP.concat.app.js` - The output of the `prefix` + `js` + `ClientSideTemplates` + `suffix`
-- `NAMEOFAPP.concat.full.js` - The output of the lib files placed in the `environment.json` file and the `NAMEOFAPP.concat.app.js`
+- `NAMEOFAPP.concat.full.js` - The output of the lib files placed in the `environment.json` file + `NAMEOFAPP.concat.app.js`
 - `NAMEOFAPP.min.vVERSION.js` - The minified `NAMEOFAPP.concat.full.js`
 
 #### Sass ####
@@ -95,6 +95,12 @@ We use [Compass](http://compass-style.org/) because it comes with a lot of built
 We also decided to go against the current trend of Twitter's Bootstrap because it seems like every new site made today is using that. So, to change it up we decided to go with [Foundation](http://foundation.zurb.com/) and their [Foundation Icons](http://zurb.com/playground/foundation-icons).
 
 Lastly, we feel there should only be 1 output from the Sass compilation process. `main.scss` is the file that includes all other files.
+
+#### MongoDB ####
+Under the `db/` directory, you will find two sub directories: `controllers`, `models`
+
+These are added and required automatically from running `node server`.
+If you look into the `AppController.js` file you will see that most of the standard routes are defined for you and are routed to the specific controller based on the `urlPath` and the http verb.
 
 
 ## FAQ
