@@ -82,11 +82,11 @@ changes using `grunt-contrib-watch`. What follows is a list of the tasks you can
 1. What is this `environment.json` file used for?
 This file is used to control certain aspects of the build process. 
 
-* `environment` - Tells the SASS compilation whether or not to minify and compress the output. 
-	- `development` -> Expanded output
-	- `production` -> Compressed/Minified output
-* `cssCacheBusting` - Tells the grunt task whether or not to make a copy of the file using the version number in the `package.json` file
-* `libFiles` - Files you want included in the concatentation build process.
-	- It's worth noting here that order does matter in this array
-* `testingLibs` - Files required for testing but do not need to be part of your file outputted css
+		* `environment` - Tells the SASS compilation whether or not to minify and compress the output. 
+			- `development` -> Expanded output
+			- `production` -> Compressed/Minified output
+		* `cssCacheBusting` - Tells the grunt task whether or not to make a copy of the file using the version number in the `package.json` file
+		* `libFiles` - Files you want included in the concatentation build process.
+			- It's worth noting here that order does matter in this array
+		* `testingLibs` - Files required for testing but do not need to be part of your file outputted css
 
