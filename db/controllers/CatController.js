@@ -22,5 +22,21 @@ module.exports = {
 		res.send({
 			name: 'Garfield'
 		});
+	},
+
+	create: function (req, res, next) {
+
+	},
+
+	destroyAll: function (req, res, next) {
+
+	},
+
+	destroy: function (req, res, next) {
+
+	},
+
+	update: function (req, res, next) {
+		
 	}
 };	
