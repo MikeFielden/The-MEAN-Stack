@@ -5,4 +5,4 @@ var catSchema = mongoose.Schema({
 });
 
 // Compile schema into a model
-var Cat = mongoose.model('Cat', catSchema);
+mongoose.model('Cat', catSchema);

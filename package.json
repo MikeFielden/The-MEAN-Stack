@@ -19,7 +19,8 @@
     "ejs": "latest",
     "mongoose" : "3.6.11",
     "node-logging": "0.1.6",
-    "path": "0.4.9"
+    "path": "0.4.9",
+    "inflection": "1.2.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

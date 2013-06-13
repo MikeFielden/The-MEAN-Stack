@@ -27,7 +27,7 @@ exports.boot = function(params){
 	bootApplication(app);
 	
 	bootModels(app);
-	//bootControllers(app);
+	bootControllers(app);
 	
 	return app;
 };
@@ -43,7 +43,7 @@ function bootApplication(app) {
 	app.use(express.cookieParser());
 
 	// Serve static files from the /public directory
-	app.use(express.static(app_root + '/public'));
+	app.use('/', express.static(app_root + '/public'));
 	
 	// Set up an expressJs session
 	app.use(express.session({
@@ -61,13 +61,6 @@ function bootApplication(app) {
 	// Set up logging here so you dont get a log for every static file
 	app.use(express.logger());
 	app.use(logging.requestLogger);
-
-	app.get('/', function (req, res)
-	{
-		res.render('index.html');
-	});
-
-	
 }
 
 //Bootstrap models 
@@ -87,7 +80,10 @@ function bootModels(app) {
 // Bootstrap controllers
 function bootControllers(app) {
 	fs.readdir(app_root + '/db/controllers', function(err, files){
-		if (err) throw err;
+		if (err) {
+			throw err;
+		}
+
 		files.forEach(function(file){			
 			bootController(app, file);				
 		});
@@ -104,20 +100,19 @@ function bootModel(app, file) {
 // Load the controller, link to its view file from here
 function bootController(app, file) {
 	var name = file.replace('.js', ''),
-		controller = app_root + '/controllers/' + name,	 // full controller to include
-		template = name.replace('Controller','').toLowerCase();	// template folder for html - remove the ...Controller part.
+			controller = app_root + '/db/controllers/' + name; // full controller to include
+	 		//template = name.replace('Controller','').toLowerCase();	// template folder for html - remove the ...Controller part.
 
 	// console.log('bootController')
 	// console.log('name = '+name)
 	// console.log('controller = '+controller)
-	// console.log('template = '+template)
 	
 	// Include the controller
-	//require(controller)(app,template);			// Include
+	//require(controller)(app);			// Include
 }
 
 // allow normal node loading if appropriate
 if (!module.parent) {
 	exports.boot().listen(app_port);
-	console.log("Express server %s listening on port %d", express.version, app_port);
+	console.log("Express server listening on port %d", app_port);
 }
