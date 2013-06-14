@@ -17,6 +17,7 @@ This is a SPA (single page application) boilerplate using the following technolo
 Install the following on your own
 - [NodeJs](http://nodejs.org/)
 - [Compass](http://compass-style.org/install/)
+	
 	```sh
   $ gem update --system
   $ gem install compass
