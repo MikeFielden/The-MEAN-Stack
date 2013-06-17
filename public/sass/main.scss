@@ -1,15 +1,17 @@
-body {
-	background: black;
-	color: orange;
-}
+@import "../../vendor/foundation/scss/foundation";
+@import "../../vendor/foundation-icons/foundation_icons_general/sass/general_foundicons";
 
 /**
- * Typography
+ * Local Typography
  */
-
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/Roboto-Regular.woff) format('woff');
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(../fonts/Roboto-Regular.woff) format('woff');
 }
+
+/**
+ * Local Imports
+ */
+@import "../app/about/about";
