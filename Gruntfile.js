@@ -29,6 +29,7 @@ module.exports = function (grunt) {
 		env: grunt.file.readJSON('environment.json'),
 
 		mindir: 'public/min',
+		finalFontLocation: 'public/fonts',
 
 		/**
 		 * The banner is the comment that is placed at the top of our compiled 
@@ -61,13 +62,14 @@ module.exports = function (grunt) {
 			tpljs: [ 'public/min/tmp/**/*.js' ],
 			itpl: [ 'public/index.tpl.html' ],
 			sass: ['public/sass/**/*.scss'],
-			unit: [ 'public/**/*.spec.js' ]
+			unit: [ 'public/**/*.spec.js' ],
+			localFonts: ['public/assets/fonts/*']
 		},
 
 		/**
 		 *	The directory to clean when 'grunt clean' is executed
 		 */
-		clean: [ '<%= mindir %>/*.js'],
+		clean: [ '<%= mindir %>/*.js', '<%= finalFontLocation %>'],
 
 		/**
 		 *	Use ngmin to annotate the angular sources prior to minifying
@@ -89,6 +91,26 @@ module.exports = function (grunt) {
 					src: [ 'public/stylesheets/main.css' ],
 					dest: 'public/stylesheets/main.v<%= pkg.version %>.css',
 					expand: false
+				}]
+			},
+
+			foundationIconFonts: {
+				files: [{
+					src: ['vendor/foundation-icons/**/fonts/**'],
+					dest: '<%= finalFontLocation %>',
+					expand: true, 
+					filter: 'isFile',
+					flatten: true
+				}]
+			},
+
+			localFonts: {
+				files: [{
+					src: ['<%= src.localFonts %>'],
+					dest: '<%= finalFontLocation %>',
+					expand: true,
+					filter: 'isFile',
+					flatten: true
 				}]
 			}
 		},
@@ -268,8 +290,13 @@ module.exports = function (grunt) {
 			 * When the CSS files change, we need to compile and minify just them.
 			 */
 			sass: {
-				files: [ 'public/sass/**/*.scss' ],
+				files: [ 'public/sass/**/*.scss', 'public/app/**/*.scss' ],
 				tasks: 'compassCompile'
+			},
+
+			fonts: {
+				files: [ '<%= src.localFonts %>'],
+				tasks: 'copy:localFonts'
 			},
 
 			index: {
@@ -312,7 +339,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('watch', ['default', 'jasmine', 'delta']);
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'index', 'jasmine']);
+	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'install:fonts', 'index', 'jasmine']);
 
 	grunt.registerTask('test', ['jasmine']);
 
@@ -336,6 +363,23 @@ module.exports = function (grunt) {
 			grunt.task.run('copy:css');	
 		}
 
+	});
+
+	/**
+	*	The public/fonts folder contains the application's font files.  This task installs
+	* the foundation-icon fonts into that directory where the @import foundation-icon scss
+	* files in the main.scss are mapped correctly for the icon-font files
+	* 
+	* This makes it to where you dont have to go into the foundation files and change the font locations
+	*/
+	grunt.registerTask('install:fonts', function () {
+		grunt.log.writeln("Installing font-icons...");
+		// copy over foundation-icon font files to a directory where they are expected
+		grunt.task.run('copy:foundationIconFonts');
+
+		grunt.log.writeln("Copying over local fonts...");
+		// Copy local fonts
+		grunt.task.run('copy:localFonts');
 	});
 
 	/** 

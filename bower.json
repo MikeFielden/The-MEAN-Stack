@@ -2,7 +2,9 @@
   "name": "The-MEAN-Stack-Boilerplate",
   "version": "0.0.1",
   "dependencies": {
-  	"angular": "latest"
+  	"angular": "latest",
+  	"foundation": "latest",
+  	"foundation-icons": "latest"
   },
 
   "devDependencies": {

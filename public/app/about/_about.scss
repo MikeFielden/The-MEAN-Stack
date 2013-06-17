@@ -1,0 +1,22 @@
+// This file should contain all the specific code for the about section
+$mongo: rgb(85,173,71);
+$node: rgb(140,200,76);
+$ang: rgb(220,27,22);
+
+.mongo {
+	&:hover {
+		color: $mongo;
+	}
+}
+
+.node {
+	&:hover {
+		color: $node;
+	}
+}
+
+.ang {
+	&:hover {
+		color: $ang;
+	}
+}
