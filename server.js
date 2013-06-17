@@ -8,13 +8,15 @@ var app,
 	util		= require('util'),
 	mongoose	= require('mongoose'),
 	logging		= require('node-logging');
-	// nib			= require('nib'),
-	// passport	= require('passport');
 
 // Connect to the Mongo db
 mongoose.connect(dbConfig.db);
 mongoose.connection.once('open', function () {
 	console.log('Connected successfully....');
+});
+
+mongoose.connection.once('error', function () {
+	console.error('MONGO SERVER NOT STARTED!');
 });
 
 // Initial bootstrapping
@@ -50,9 +52,6 @@ function bootApplication(app) {
 		secret: "SUPERimportantSTRING CHANGE IT",
 		maxAge: new Date(Date.now() + 3600000)
   }));
-
-	//app.use(passport.initialize());
-	//app.use(passport.session());
 
 	// Moves our routes above the Middleware
 	// so this will attempt to match our route before continueing
