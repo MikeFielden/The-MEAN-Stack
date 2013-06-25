@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
+	grunt.loadNpmTasks('grunt-contrib-nodeunit');
 	grunt.loadNpmTasks('grunt-ngmin');
 
 	/**
@@ -62,7 +63,8 @@ module.exports = function (grunt) {
 			tpljs: [ 'public/min/tmp/**/*.js' ],
 			itpl: [ 'public/index.tpl.html' ],
 			sass: ['public/sass/**/*.scss'],
-			unit: [ 'public/**/*.spec.js' ],
+			clientUnit: [ 'public/**/*.spec.js' ],
+			serverUnit: [ 'logic/**/*.spec.js'],
 			localFonts: ['public/assets/fonts/*']
 		},
 
@@ -173,11 +175,13 @@ module.exports = function (grunt) {
 			src: [ 
 				'Gruntfile.js', 
 				'<%= src.js %>',
-				'<%= src.unit %>',
+				'<%= src.clientUnit %>',
+				'<%= src.serverUnit %>',
 				'!public/components/**'
 			],
 			test: [
-				'<%= src.unit %>'
+				'<%= src.clientUnit %>',
+				'<%= src.serverUnit %>'
 			],
 			gruntfile: [
 				'Gruntfile.js'
@@ -237,8 +241,8 @@ module.exports = function (grunt) {
 		},
 
 		/**
-		* Jasmine unit testing
-		*/
+		 * Jasmine unit testing
+		 */
 		jasmine: {
 			src: '<%= src.js %>',
 			options: {	
@@ -248,8 +252,16 @@ module.exports = function (grunt) {
 			}
 		},
 
+		/** 
+		 * Node unit testing (server side testing)
+		 */
+		nodeunit: {
+			all: [ '<%= src.serverUnit %>']
+		},
+
 		/**
-		 *	
+		 * This is to keep track of the changes
+		 * Anything under here will be tracked for changes and the appropriate tasks will be ran
 		 */
 		delta: {
 			/**
@@ -281,9 +293,10 @@ module.exports = function (grunt) {
 			src: {
 				files: [ 
 					'<%= src.js %>',
-					'<%= src.unit %>'
+					'<%= src.clientUnit %>',
+					'<%= src.serverUnit %>'
 				],
-				tasks: [ 'jshint:src', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'jasmine' ]
+				tasks: [ 'jshint:src', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'test' ]
 			},
 
 			/**
@@ -336,12 +349,12 @@ module.exports = function (grunt) {
 	 *	This allows us to watch what we want to watch and control what happens
 	 */
 	grunt.renameTask('watch', 'delta');
-	grunt.registerTask('watch', ['default', 'jasmine', 'delta']);
+	grunt.registerTask('watch', ['default', 'delta']);
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'install:fonts', 'index', 'jasmine']);
+	grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'concat:app', 'ngmin:dist', 'concat:libs', 'uglify', 'compassCompile', 'install:fonts', 'index', 'test']);
 
-	grunt.registerTask('test', ['jasmine']);
+	grunt.registerTask('test', ['jasmine', 'nodeunit']);
 
 	/**
 	 *  Task for general compass items 
