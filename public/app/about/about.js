@@ -16,7 +16,7 @@ angular.module( 'ngMeanStack.about', [])
   ];
 
   $scope.testExample = function () {
-    return true; 
+    return true;
   };
 
 })

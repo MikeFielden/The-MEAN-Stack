@@ -2,8 +2,8 @@
 
 describe("AboutCtrl", function () {
 
-	var AboutCtrl, 
-			$location, 
+	var AboutCtrl,
+			$location,
 			$scope;
 
 	beforeEach(module( 'ngMeanStack.about'));
@@ -13,9 +13,9 @@ describe("AboutCtrl", function () {
 
 		$scope = $rootScope.$new();
 
-		AboutCtrl = $controller( 'AboutCtrl', { 
-			$location: $location, 
-			$scope: $scope 
+		AboutCtrl = $controller( 'AboutCtrl', {
+			$location: $location,
+			$scope: $scope
 		});
 
 	}));
@@ -28,6 +28,5 @@ describe("AboutCtrl", function () {
 	it( 'Demo test on scope', inject( function () {
 		expect( $scope.testExample() ).toBeTruthy();
 	}));
-
-
+	
 });

@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 		 * pairs are evaluated based on this very configuration object.
 		 */
 		meta: {
-			banner: 
+			banner:
 				'/**\n' +
 				' * <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
 				' * <%= pkg.homepage %>\n' +
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
 		 */
 		copy: {
 			css: {
-				files: [{ 
+				files: [{
 					src: [ 'public/stylesheets/main.css' ],
 					dest: 'public/stylesheets/main.v<%= pkg.version %>.css',
 					expand: false
@@ -100,7 +100,7 @@ module.exports = function (grunt) {
 				files: [{
 					src: ['vendor/foundation-icons/**/fonts/**'],
 					dest: '<%= finalFontLocation %>',
-					expand: true, 
+					expand: true,
 					filter: 'isFile',
 					flatten: true
 				}]
@@ -131,7 +131,7 @@ module.exports = function (grunt) {
 			libs: {
 				src: [
 					'<%= env.libFiles %>',
-					'<%= mindir %>/<%= pkg.name %>.annotated.js'	
+					'<%= mindir %>/<%= pkg.name %>.annotated.js'
 				],
 				dest: '<%= mindir %>/<%= pkg.name %>.concat.full.js'
 			}
@@ -172,8 +172,8 @@ module.exports = function (grunt) {
 		 *	Exclude the components directory
 		 */
 		jshint: {
-			src: [ 
-				'Gruntfile.js', 
+			src: [
+				'Gruntfile.js',
 				'<%= src.js %>',
 				'<%= src.clientUnit %>',
 				'<%= src.serverUnit %>',
