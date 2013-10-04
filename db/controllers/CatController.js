@@ -1,13 +1,13 @@
-/** 
+/**
  *	CatController
  **/
 
 module.exports = {
 	/**
 	 *	Default mapping to GET '/cats'
-	 **/		
+	 **/
 	getAll: function (req, res, next) {
-		
+
 		res.send([{
 			name: 'Thomas McStinkerton'
 		}, {
@@ -37,6 +37,6 @@ module.exports = {
 	},
 
 	update: function (req, res, next) {
-		
+
 	}
-};	
+};

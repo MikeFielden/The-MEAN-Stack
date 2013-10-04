@@ -2,7 +2,7 @@ var inflection = require('inflection');
 
 module.exports = function (app) {
 	// Below is required if you delete the favicon.ico from public
-	// app.get("/favicon.ico", function() {}); 
+	// app.get("/favicon.ico", function() {});
 
 	/*
 	 *	Plural calls
@@ -12,7 +12,7 @@ module.exports = function (app) {
 
 	/*
 	 *	Plural Create & Delete
-	 */ 
+	 */
 	// POST '/cats'
 	app.post('/:controller', router);
 
@@ -25,7 +25,7 @@ module.exports = function (app) {
 	// GET '/cat/1'
 	app.get("/:controller/:id", router);
 
-	// UPDATE '/cat/1' 
+	// UPDATE '/cat/1'
 	app.put('/:controller/:id', router);
 
 	// DELETE '/cat/1'
@@ -49,10 +49,10 @@ function router (req, res, next) {
 		return;
 	}
 
-	// Determine the function to call based on the controller/model and method passed	
+	// Determine the function to call based on the controller/model and method passed
 	if (id.length === 0) {
 		switch (method) {
-			case 'get': 
+			case 'get':
 				fn = 'getAll';
 				break;
 

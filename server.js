@@ -49,7 +49,7 @@ function bootApplication(app) {
 	
 	// Set up an expressJs session
 	app.use(express.session({
-		secret: "SUPERimportantSTRING CHANGE IT",
+		secret: 'SUPERimportantSTRING CHANGE IT',
 		maxAge: new Date(Date.now() + 3600000)
   }));
 
@@ -83,8 +83,8 @@ function bootControllers() {
 			throw err;
 		}
 
-		files.forEach(function(file){			
-			bootController(file);				
+		files.forEach(function(file){
+			bootController(file);
 		});
 	});
 	
@@ -111,5 +111,5 @@ function bootController(file) {
 // allow normal node loading if appropriate
 if (!module.parent) {
 	exports.boot().listen(app_port);
-	console.log("Express server listening on port %d", app_port);
+	console.log('Express server listening on port %d', app_port);
 }
